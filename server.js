@@ -4,10 +4,11 @@ const app = express();
 const db = require('./config/keys').mongoURI;
 const item = require('./routes/api')
 
+//body parser
 app.use(express.json());
 
 
-app.get('/', (req,res) => {res.send('this is out home page')})
+app.get('/', (req,res) => {res.send('this is our home page')})
 
 //DB Connection 
 mongoose.connect(db, {useNewUrlParser:true , useUnifiedTopology : true})
