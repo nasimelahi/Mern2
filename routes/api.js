@@ -4,14 +4,30 @@ const router = express.Router();
 
 //items model
 
-const Item = require('../model/Item');
+const items = require('../model/Item');
 
 // Get All Item
 
 router.get('/', (req,res) => {
-    Item.find()
+    items.find()
     .sort({ data: -1})
     .then((item => res.json(item)))
+   
+})
+
+// get induvidual item
+
+router.get('/:id', (req,res) => {
+   let item_check = items.find({_id:req.params.id})
+   .then( item => {
+    if(item){
+        return res.status(200).json(item)
+    }else{
+        return res.status(400).json({"msg":"this item is not in list"})
+    }
+   })
+   .catch(err => next(err))
+    //console.log(item_check)
 })
 
 // post data
@@ -22,9 +38,7 @@ router.post('/',(req,res) => {
     })
 
     newItem.save()
-    .then((item) => {
-       console.log(item)
-    })
+    .then((item) => { res.json(item)})
 })
 
 
