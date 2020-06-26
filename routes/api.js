@@ -33,12 +33,37 @@ router.get('/:id', (req,res) => {
 // post data
 
 router.post('/',(req,res) => {
-    const newItem = new Item({
+    const newItem = new item({
         name:req.body.name
     })
 
     newItem.save()
     .then((item) => { res.json(item)})
+})
+
+// update Item
+
+router.put('/:id', (req,res) =>{
+    items.findOneAndUpdate({_id:req.params.id}, { $set: {name:req.body.name}}, {new:true})
+    .then((item)=> {
+        if(item){
+            return res.json(item)
+        }else{
+            return res.status(400).json({"msg" : " Item is not Updated"})
+        }
+    })
+    .catch(err => console.log(err))
+})
+
+//Delete Record
+router.delete('/:id', (req,res) => {
+    items.findOneAndDelete({_id:req.params.id})
+    .then(item => {
+        if(item){
+            return res.status(200).json({"msg":"Item delated"})
+        }
+    })
+    .catch(err => console.log(err))
 })
 
 
