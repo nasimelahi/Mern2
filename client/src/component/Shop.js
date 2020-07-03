@@ -6,6 +6,7 @@ class shopping extends Component {
     }
 
     state = {
+        isedit : false,
         item:'',
         items:[
             {
@@ -36,8 +37,17 @@ class shopping extends Component {
   }
 
   delateitem = (id) => {
-      let delatetodo = this.state.itme
+      let items = this.state.items.filter(item => item.id !== id)
+      this.setState({
+            isedit: true
+      })
   }
+
+  updateitem = (id) => {
+    let items = this.state.items.filter(item => item.id == id)
+    console.log(items)
+}
+
   render() {
     return(
         <div>
@@ -53,7 +63,10 @@ class shopping extends Component {
                             />
                             <button className='btn btn-block btn-outline-primary'>Add</button>
                         </form>
-                        <ViewList data={ this.state.items } delateitem = { this.delateitem }/>
+                        <ViewList data={ this.state.items } 
+                        delateitem = { this.delateitem } 
+                        updateitem = { this.updateitem }
+                        edit = {this.state.isedit}/>
                     </div>
                 </div>
             </div>
