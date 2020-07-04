@@ -39,14 +39,28 @@ class shopping extends Component {
   delateitem = (id) => {
       let items = this.state.items.filter(item => item.id !== id)
       this.setState({
-            isedit: true
+            items
       })
   }
 
-  updateitem = (id) => {
-    let items = this.state.items.filter(item => item.id == id)
-    console.log(items)
-}
+  updateitem = (name,id) => {
+    //let items = this.state.items.filter(item => item.id == id);
+    let items = this.state.items.map(item => {
+        if(id == item.id){
+            return{
+                ...item,
+                name
+            }
+        }
+
+        return item
+    })
+
+    this.setState({
+        items
+    })
+    
+   }
 
   render() {
     return(
@@ -65,7 +79,7 @@ class shopping extends Component {
                         </form>
                         <ViewList data={ this.state.items } 
                         delateitem = { this.delateitem } 
-                        updateitem = { this.updateitem }
+                        updateitem = { this.updateitem.bind(this) }
                         edit = {this.state.isedit}/>
                     </div>
                 </div>
